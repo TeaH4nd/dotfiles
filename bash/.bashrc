@@ -87,4 +87,9 @@ export PS1='\[$BOLD\]\[$RED\]\u\[$YELLOW\]@\[$ORANGE\]\h\[$WHITE\]:\[$BLUE\]\w \
 command -v nerdfetch &>/dev/null && nerdfetch
 echo
 
+# Source local bashrc if it exists
+if [ -f "$HOME/.bashrc_local" ]; then
+    # Redirect stderr to /dev/null to avoid errors if the file doesn't exist
+    source "$HOME/.bashrc_local" 2>/dev/null
+fi
 true
