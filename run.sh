@@ -7,7 +7,7 @@ PATH="$DOTFILES_DIR/bin:$PATH"
 
 ## Update dotfiles itself
 echo -n Updating dotfiles... 
-if [ type "git -a -d "$DOTFILES_DIR/.git"" 2>/dev/null]
+if command -v git &>/dev/null && [ -d "$DOTFILES_DIR/.git" ]
 then 
     git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master; 
     echo Updated!
@@ -16,7 +16,7 @@ echo
 
 ## Verify if vim is installed
 echo -n Verifying if vim is installed... 
-if [ type "vim" 2>/dev/null ]
+if ! command -v vim &>/dev/null
 then
     sudo apt install vim
 else
@@ -24,19 +24,16 @@ else
 fi
 
 ## Install vim color scheme
-if [ ! -d "~/.vim/colors" ]
+if [ ! -d "$HOME/.vim/colors" ]
 then
-    mkdir ~/.vim/
-    mkdir ~/.vim/colors
-    cp -r "$DOTFILES_DIR/colors" ~/.vim/colors
-else
-    cp -r "$DOTFILES_DIR/colors" ~/.vim/colors
+    mkdir -p "$HOME/.vim/colors"
 fi
+cp -r "$DOTFILES_DIR/colors/"* "$HOME/.vim/colors/"
 echo
 
 ## Verify if Vundle is installed
 echo -n Verifying if Vundle is installed... 
-if [ ! -d "~/.vim/bundle/" ]
+if [ ! -d "$HOME/.vim/bundle/" ]
 then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 else
@@ -55,7 +52,7 @@ echo
 
 ##Verify if tpm is installed
 echo -n Verifying if tpm is installed... 
-if [ ! -d "~/.tmux/plugins/tpm" ]
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]
 then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 else
@@ -69,5 +66,4 @@ ln -sfv "$DOTFILES_DIR/.bashrc" ~
 ln -sfv "$DOTFILES_DIR/.vimrc" ~
 ln -sfv "$DOTFILES_DIR/.tmux.conf" ~
 
-
-
+true
