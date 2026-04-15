@@ -127,3 +127,7 @@ D_ORANGE=$(tput setaf 130)
 TEXT=$(tput setaf 215)
 
 export PS1='\[$RED\]\u\[$YELLOW\]@\[$ORANGE\]\h \[$BLUE\]\w \n\[$D_ORANGE\]λ \[$(tput sgr0)\]'
+
+# Run nerdfetch if available
+# https://github.com/thatonecalculator/nerdfetch
+command -v nerdfetch &>/dev/null && nerdfetch
