@@ -9,7 +9,7 @@ PATH="$DOTFILES_DIR/bin:$PATH"
 echo -n Updating dotfiles... 
 if command -v git &>/dev/null && [ -d "$DOTFILES_DIR/.git" ]
 then 
-    git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master; 
+    git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin main; 
     echo Updated!
 fi
 echo
@@ -22,48 +22,21 @@ then
 else
     echo Vim is installed!
 fi
+echo
 
-## Install vim color scheme
-if [ ! -d "$HOME/.vim/colors" ]
+## Verify if stow is installed
+echo -n Verifying if stow is installed...
+if ! command -v stow &>/dev/null
 then
-    mkdir -p "$HOME/.vim/colors"
-fi
-cp -r "$DOTFILES_DIR/colors/"* "$HOME/.vim/colors/"
-echo
-
-## Verify if Vundle is installed
-echo -n Verifying if Vundle is installed... 
-if [ ! -d "$HOME/.vim/bundle/" ]
-then
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    sudo apt install stow
 else
-    echo Vundle is installed!
+    echo stow is installed!
 fi
 echo
 
-## Verify if Tmux is installed
-echo -n Verifying if tmux is installed... 
-if which tmux >/dev/null 2>&1; then ##if [ type "tmux" 2>/dev/null ]; then
-    echo tmux is installed!
-else
-    sudo apt install tmux
-fi
-echo
-
-##Verify if tpm is installed
-echo -n Verifying if tpm is installed... 
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]
-then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-else
-    echo tpm is installed!
-fi
-echo
-
-
-echo Soft-linking files
-ln -sfv "$DOTFILES_DIR/.bashrc" ~
-ln -sfv "$DOTFILES_DIR/.vimrc" ~
-ln -sfv "$DOTFILES_DIR/.tmux.conf" ~
+## Stow dotfiles packages
+echo Stowing dotfiles...
+cd "$DOTFILES_DIR"
+stow -v -t "$HOME" bash vim
 
 true
