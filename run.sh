@@ -39,7 +39,7 @@ echo
 echo -n "Verifying if nerdfetch is installed... "
 if ! command -v nerdfetch &>/dev/null
 then
-    sudo curl -fsSL https://raw.githubusercontent.com/ThatOneCalculator/NerdFetch/main/nerdfetch -o /usr/bin/nerdfetch
+    sudo curl -fsSL https://raw.githubusercontent.com/ThatOneCalculator/NerdFetch/refs/tags/v8.5.4/nerdfetch -o /usr/bin/nerdfetch
     sudo chmod +x /usr/bin/nerdfetch
     echo "Nerdfetch installed!"
 else
