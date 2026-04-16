@@ -1,6 +1,6 @@
 # Network interface to use
 export MY_INTERFACE="enp1s0"
-export MY_LAN_IP=$(ip addr show $MY_INTERFACE | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
+export MY_LAN_IP=$(ip addr show "$MY_INTERFACE" | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
 
 export FLASHMAN_FOLDER="$HOME/projects/flashman"
 
