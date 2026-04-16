@@ -34,6 +34,17 @@ export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 
+# Gruvbox-like prompt colors
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+RED=$(tput setaf 124)
+WHITE=$(tput setaf 15)
+BLUE=$(tput setaf 24)
+YELLOW=$(tput setaf 208)
+ORANGE=$(tput setaf 202)
+D_ORANGE=$(tput setaf 130)
+TEXT=$(tput setaf 215)
+
 # Shell Options
 # Attempt spelling correction on each directory component of an argument to cd. Allowed in interactive shells only.
 shopt -s cdspell
@@ -69,17 +80,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Gruvbox-like prompt colors
-BOLD=$(tput bold)
-RESET=$(tput sgr0)
-RED=$(tput setaf 124)
-WHITE=$(tput setaf 15)
-BLUE=$(tput setaf 24)
-YELLOW=$(tput setaf 208)
-ORANGE=$(tput setaf 202)
-D_ORANGE=$(tput setaf 130)
-TEXT=$(tput setaf 215)
-
 # Track command execution time
 trap '_command_start_time=$(date +%s%N)' DEBUG
 
@@ -87,26 +87,26 @@ trap '_command_start_time=$(date +%s%N)' DEBUG
 _update_ps1() {
     local ret=$?
     
-    # Exit code of last process
-    local ps1_exit=""
-    if (( ret != 0 )); then
-        ps1_exit="\[$RED\]($ret) \[$RESET\]"
-    fi
+  # Prompt character color based on last process exit code
+  local prompt_color="$D_ORANGE"
+  if (( ret != 0 )); then
+    prompt_color="$BOLD$RED"
+  fi
     
     # Username
-    local ps1_user="\[$BOLD\]\[$RED\]\u\[$RESET\] - "
+    local ps1_user="\[$BOLD\]\[$RED\]\u"
     
     # Hostname
-    local ps1_host="\[$ORANGE\]\h \[$RESET\]"
+    local ps1_host="\[$YELLOW\]@\[$ORANGE\]\h"
     
     # Current working directory
-    local ps1_cwd="\[$BLUE\]\w\[$RESET\]"
+    local ps1_cwd="\[$WHITE\]:\[$BLUE\]\w \[$RESET\]"
     
     # Git branch display
     local ps1_git=""
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     if [[ -n $branch ]]; then
-        ps1_git=" \[$YELLOW\](\[$ORANGE\]git:$branch\[$YELLOW\])\[$RESET\]"
+        ps1_git="\[$YELLOW\](\[$ORANGE\]git:$branch\[$YELLOW\])"
     fi
     
     # Execution time
@@ -118,9 +118,9 @@ _update_ps1() {
     fi
     
     # Prompt character
-    local ps1_char="\n\[$D_ORANGE\]λ \[$RESET\]"
+    local ps1_char="\[$prompt_color\]λ \[$RESET\]"
     
-    export PS1="${ps1_exit}${ps1_user}${ps1_host}${ps1_cwd}${ps1_git}${ps1_time}${ps1_char}"
+    export PS1="\[$D_ORANGE\]┌ ${ps1_user}${ps1_host}${ps1_cwd}${ps1_git}${ps1_time}\n\[$D_ORANGE\]└─${ps1_char}"
 }
 
 export PROMPT_COMMAND="_update_ps1"
