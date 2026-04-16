@@ -1,0 +1,13 @@
+# Network interface to use
+export MY_INTERFACE="enp1s0"
+export MY_LAN_IP=$(ip addr show "$MY_INTERFACE" | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
+
+export FLASHMAN_FOLDER="$HOME/projects/flashman"
+
+export PATH="$HOME/flutter/flutter/bin:$PATH" # Flutter SDK
+export PATH="$HOME/.pub-cache/bin:$PATH" # Dart Pub Cache
+
+# NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
