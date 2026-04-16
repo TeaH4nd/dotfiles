@@ -35,6 +35,18 @@ else
 fi
 echo
 
+## Verify if nerdfetch is installed
+echo -n "Verifying if nerdfetch is installed... "
+if ! command -v nerdfetch &>/dev/null
+then
+    sudo curl -fsSL https://raw.githubusercontent.com/ThatOneCalculator/NerdFetch/main/nerdfetch -o /usr/bin/nerdfetch
+    sudo chmod +x /usr/bin/nerdfetch
+    echo "Nerdfetch installed!"
+else
+    echo "Nerdfetch is installed!"
+fi
+echo
+
 ## Backup and Cleanup of conflicting files
 echo "Checking for existing files to backup..."
 # List of packages to be processed by stow
