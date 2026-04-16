@@ -80,7 +80,50 @@ ORANGE=$(tput setaf 202)
 D_ORANGE=$(tput setaf 130)
 TEXT=$(tput setaf 215)
 
-export PS1='\[$BOLD\]\[$RED\]\u\[$YELLOW\]@\[$ORANGE\]\h\[$WHITE\]:\[$BLUE\]\w \n\[$D_ORANGE\]λ \[$RESET\]'
+# Track command execution time
+trap '_command_start_time=$(date +%s%N)' DEBUG
+
+# Construct the prompt in modular sections
+_update_ps1() {
+    local ret=$?
+    
+    # Exit code of last process
+    local ps1_exit=""
+    if (( ret != 0 )); then
+        ps1_exit="\[$RED\]($ret) \[$RESET\]"
+    fi
+    
+    # Username
+    local ps1_user="\[$BOLD\]\[$RED\]\u\[$RESET\] - "
+    
+    # Hostname
+    local ps1_host="\[$ORANGE\]\h \[$RESET\]"
+    
+    # Current working directory
+    local ps1_cwd="\[$BLUE\]\w\[$RESET\]"
+    
+    # Git branch display
+    local ps1_git=""
+    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ -n $branch ]]; then
+        ps1_git=" \[$YELLOW\](\[$ORANGE\]git:$branch\[$YELLOW\])\[$RESET\]"
+    fi
+    
+    # Execution time
+    local current_time=$(date +%s%N)
+    local elapsed_ms=$(( (current_time - _command_start_time) / 1000000 ))
+    local ps1_time=""
+    if [ $elapsed_ms -gt 0 ]; then
+        ps1_time=" \[$D_ORANGE\][\[$RESET\]${elapsed_ms}ms\[$D_ORANGE\]]\[$RESET\]"
+    fi
+    
+    # Prompt character
+    local ps1_char="\n\[$D_ORANGE\]λ \[$RESET\]"
+    
+    export PS1="${ps1_exit}${ps1_user}${ps1_host}${ps1_cwd}${ps1_git}${ps1_time}${ps1_char}"
+}
+
+export PROMPT_COMMAND="_update_ps1"
 
 # Run nerdfetch if available
 # https://github.com/thatonecalculator/nerdfetch
