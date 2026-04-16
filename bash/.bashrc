@@ -135,4 +135,6 @@ if [ -f "$HOME/.bashrc_local" ]; then
     # Redirect stderr to /dev/null to avoid errors if the file doesn't exist
     source "$HOME/.bashrc_local" 2>/dev/null
 fi
+
+
 true
