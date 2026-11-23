@@ -1,0 +1,120 @@
+{
+  // -----------------------------
+  // Window & Workbench
+  // -----------------------------
+  "window.titleBarStyle": "custom",
+  "window.menuBarVisibility": "compact",
+  "chat.viewSessions.orientation": "stacked",
+
+  // -----------------------------
+  // Editor
+  // -----------------------------
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.lineNumbers": "relative",
+  "editor.rulers": [
+    80
+  ],
+
+  // -----------------------------
+  // Files & Explorer
+  // -----------------------------
+  "files.autoSave": "onFocusChange",
+  "explorer.confirmDelete": false,
+
+  // -----------------------------
+  // Debug
+  // -----------------------------
+  "debug.internalConsoleOptions": "openOnSessionStart",
+  "debug.openDebug": "openOnDebugBreak",
+
+  // -----------------------------
+  // Terminal
+  // -----------------------------
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.fontFamily": "'Hack Nerd Font Mono'",
+  "terminal.integrated.stickyScroll.enabled": false,
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+
+  // -----------------------------
+  // Diff & Source Control
+  // -----------------------------
+  "diffEditor.ignoreTrimWhitespace": false,
+  "githubPullRequests.pullBranch": "never",
+
+  // -----------------------------
+  // Language-specific
+  // -----------------------------
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[dart]": {
+    "editor.selectionHighlight": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+
+  // -----------------------------
+  // Dart & Flutter
+  // -----------------------------
+  "dart.flutterSdkPath": "/home/devanlix/flutter/flutter",
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "dart.showDebuggerNumbersAsHex": true,
+  "dart.devToolsLocation": {
+    "default": "beside",
+    "inspector": "sidebar"
+  },
+
+  // -----------------------------
+  // Extensions
+  // -----------------------------
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "indentRainbow.indicatorStyle": "light",
+  "indentRainbow.lightIndicatorStyleLineWidth": 5,
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.dart$",
+        "cmd": "/home/devanlix/.pub-cache/bin/dartformat ${file}"
+      }
+    ]
+  },
+  "vim.highlightedyank.enable": true,
+  "vim.smartRelativeLine": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "<leader>",
+        "p"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    }
+  ]
+}
